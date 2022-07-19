@@ -23,25 +23,23 @@
     <script>
 
         function coffee(){
-
-        let coffeeMachine = {
-            message: 'Your coffee is ready!',
-            start: function() {
-                    console.log(this);
-            },   
-        }
-
-        let teaPlease = {
-            message: 'Wanna some tea instead of coffee?',
-            start: function() {
-                    console.log(this);
-            },   
+            let coffeeMachine = {
+                message: 'Your coffee is ready!',
+                start: function() {
+                        setTimeout(() => console.log(this.message),2000);
+                },   
             }
+            coffeeMachine.start();
 
-        coffeeMachine.start(); // 'Your coffee is ready!'
-        teaPlease.start();
-        const coffeeIsOver=coffeeMachine.start.bind(teaPlease);
-        coffeeIsOver();
+            let teaPlease = {
+                message: 'Wanna some tea instead of coffee?',
+                start: function() {
+                    setTimeout(() => console.log(this.message),2000);
+                },  
+            }
+            teaPlease.start();
+            const coffeeIsOver=coffeeMachine.start.bind(teaPlease);
+            coffeeIsOver();
         }
 
         function twoStrings(){
@@ -85,17 +83,14 @@
         }
         function test(){
             
-            let addOne = addBase(1);//В этот момен вызывается функция addbase, аргумент равен 1, значение base равно 1
-            
-            //уже в этот момент, еще до вызова addone, в внутренней функции записано значение 1+num
-            function addBase(base) {       
-                return function (num) {     
-                    return base + num; //num присваивается в момент вызова addone
-                                        
+            function addBase(base) {
+                return function (num) {
+                    return base + num;
                 };
-            }
-            console.log(addOne(5));
-
+                }
+            let addOne = addBase(1);
+            console.log(addOne);
+            alert(addOne(5) + addOne(3));
         }
 
     </script>
