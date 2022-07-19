@@ -4,22 +4,102 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task8</title>
+    <title>Task10</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+
     <div class="article">
         <p class="universe starColor">ДЗ 10. SetTimeout и контекст</p>
         <div class="grid">
-            <button class="myButton" onclick="empty()">1.Вывод сообщения с интервалом</button>
-            <button class="myButton" onclick="empty()">2.Соединение 2 строк</button>
-            <button class="myButton" onclick="empty()">3.Вывод чисел с интервалом</button>
-            <button class="myButton" onclick="empty()">4.Тест фрагмента кода</button>
+            <button class="myButton" onclick="coffee()">1.Вывод сообщения с интервалом</button>
+            <button class="myButton" onclick="twoStrings()">2.Соединение 2 строк</button>
+            <button class="myButton" onclick="interval()">3.Вывод чисел с интервалом</button>
+            <button class="myButton" onclick="test()">4.Тест фрагмента кода</button>
         </div>
     </div>
 
     <script>
 
+        function coffee(){
+
+        let coffeeMachine = {
+            message: 'Your coffee is ready!',
+            start: function() {
+                    console.log(this);
+            },   
+        }
+
+        let teaPlease = {
+            message: 'Wanna some tea instead of coffee?',
+            start: function() {
+                    console.log(this);
+            },   
+            }
+
+        coffeeMachine.start(); // 'Your coffee is ready!'
+        teaPlease.start();
+        const coffeeIsOver=coffeeMachine.start.bind(teaPlease);
+        coffeeIsOver();
+        }
+
+        function twoStrings(){
+            //функция живет сама по себе и ожидает три аргумента
+            function concatStr(a, b, c) {
+                return a + b + c;
+            }
+
+            //в переменную записываем вызов функции с тремя аргументами
+            let checkConcat = concatStr('Hello', ' ', 'Matt');
+
+            console.log(concatStr);//возвращает функцию
+            console.log(checkConcat);//возвращает результат функции
+    
+            //Этот вызов создает новую функцию hello, которая которая передаёт вызов concatstr, фиксируя null как контекст, 
+            //И два первых аргумента. Следующие аргументы передаются как есть.
+            let hello =concatStr.bind(null, 'hello',' ');
+           
+            let finalResult = hello('Alien'); // 'Hello Matt'
+            let finalResult2 = hello('Ivan'); // 'Hello John'
+            console.log(hello);//возвращает функцию
+            console.log(finalResult);//возвращает результат вызова функции
+            console.log(finalResult2);//возвращает рещультат вызова функции
+        }
+
+        function interval(){
+            function showNumbers(start,end,interval){
+                let current = start;
+
+                setTimeout(function go() {
+                    console.log(current);
+                    if (current < end) {
+                    setTimeout(go, interval);
+                    }
+                    current++;
+                }, interval);
+                }
+            
+            showNumbers(5, 10, 500); // 5 6 7 8 9 10
+
+        }
+        function test(){
+            
+            let addOne = addBase(1);//В этот момен вызывается функция addbase, аргумент равен 1, значение base равно 1
+            
+            //уже в этот момент, еще до вызова addone, в внутренней функции записано значение 1+num
+            function addBase(base) {       
+                return function (num) {     
+                    return base + num; //num присваивается в момент вызова addone
+                                        
+                };
+            }
+            console.log(addOne(5));
+
+        }
+
     </script>
 </body>
 </html>
+
+
