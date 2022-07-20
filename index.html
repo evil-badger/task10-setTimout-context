@@ -38,8 +38,10 @@
                 },  
             }
             teaPlease.start();
-            const coffeeIsOver=coffeeMachine.start.bind(teaPlease);
+            coffeeMachine.start=coffeeMachine.start.bind(teaPlease);//перепривязка уже существующего метода к другому обьекту
+            const coffeeIsOver=coffeeMachine.start.bind(teaPlease);//создание новой функции
             coffeeIsOver();
+            coffeeMachine.start();
         }
 
         function twoStrings(){
@@ -58,8 +60,8 @@
             //И два первых аргумента. Следующие аргументы передаются как есть.
             let hello =concatStr.bind(null, 'hello',' ');
            
-            let finalResult = hello('Alien'); // 'Hello Matt'
-            let finalResult2 = hello('Ivan'); // 'Hello John'
+            let finalResult = hello('Alien'); // 'Hello alien'
+            let finalResult2 = hello('Ivan'); // 'Hello Ivan'
             console.log(hello);//возвращает функцию
             console.log(finalResult);//возвращает результат вызова функции
             console.log(finalResult2);//возвращает рещультат вызова функции
